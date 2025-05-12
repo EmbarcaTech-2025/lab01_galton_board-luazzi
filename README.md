@@ -26,6 +26,7 @@ O programa já se inicia automaticamente, no entando, conforme as bolas caem nas
 ## Função geradora de número aleatório
 
 Para criar uma função pseudoaleatória, utilizou-se três fontes de entropia do hardware (temperatura, tempo e ruído do ADC) para determinar a direção das bolas e um algoritmo eficiente de deslocamento de bits para misturar esses valores. Se o número gerado for ímpar, a bola vai para a direita; se for par, para a esquerda. 
+
 ---
 
 ## 📜 Licença
