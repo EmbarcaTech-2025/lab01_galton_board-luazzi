@@ -1,3 +1,4 @@
+
 # Generated Cmake Pico project file
 
 cmake_minimum_required(VERSION 3.13)
@@ -34,34 +35,57 @@ project(lab-01-galton-board C CXX ASM)
 pico_sdk_init()
 
 # Add executable. Default name is the project name, version 0.1
-
-add_executable(lab-01-galton-board
-  ./src/lab-01-galton-board.c 
-  ./include/ssd1306_i2c.c
-)
-
+    
+    # Add executable with all source files
+    add_executable(lab-01-galton-board
+      # Application
+      src/app/main.c
+      # Board components
+      src/board/config.c
+      src/board/collision.c
+      
+      # Models
+      src/models/ball.c
+      src/models/graphics.c
+      
+      # Drivers
+      src/drivers/ssd1306_i2c.c
+      src/drivers/hardware.c
+      
+      # HAL
+      src/hal/rng.c
+      
+    )
+    
 pico_set_program_name(lab-01-galton-board "lab-01-galton-board")
 pico_set_program_version(lab-01-galton-board "0.1")
 
-# Modify the below lines to enable/disable output over UART/USB
+# Enable USB output (disable UART)
 pico_enable_stdio_uart(lab-01-galton-board 0)
 pico_enable_stdio_usb(lab-01-galton-board 1)
 
 # Add the standard library to the build
 target_link_libraries(lab-01-galton-board
-        pico_stdlib)
-
-# Add the standard include files to the build
-target_include_directories(lab-01-galton-board PRIVATE
-        ${CMAKE_CURRENT_LIST_DIR}
-        ./include
+  pico_stdlib
 )
 
-# Add any user requested libraries
+# Add include directories
+target_include_directories(lab-01-galton-board PRIVATE
+  ${CMAKE_CURRENT_LIST_DIR}
+
+  ./include/board
+  ./include/models
+  ./include/drivers
+  ./include/hal
+  ./include/utils
+)
+
+# Add hardware libraries
 target_link_libraries(lab-01-galton-board 
-        hardware_i2c
-        
-        )
+  hardware_i2c
+  hardware_adc
+  hardware_timer
+)
 
+# Generate additional output files
 pico_add_extra_outputs(lab-01-galton-board)
-
